@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 
 // This will be the graph
-public class NFA {
+public class EpsilonNFA {
     private int numberOfNodes;
     private ArrayList<HashMap<Integer, Character>> adjList;
 
     private int startNode;
     private int finalNode;
 
-    public NFA (int numberOfNodes) {
+    public EpsilonNFA(int numberOfNodes) {
         this.numberOfNodes = numberOfNodes;
         adjList = new ArrayList<>(this.numberOfNodes);
 
@@ -85,14 +85,14 @@ public class NFA {
 
     //for testing
     public static void main(String[] args) {
-        NFA nfa = new NFA(5);
-        nfa.addEdge(0, 1, 'a');
-        nfa.addEdge(0, 4, 'b');
-        nfa.addEdge(1, 2, 'c');
-        nfa.addEdge(1, 3, 'd');
-        nfa.addEdge(1, 4, 'e');
-        nfa.addEdge(2, 3, 'f');
-        nfa.addEdge(3, 4, 'g');
-        nfa.printAdjList();
+        EpsilonNFA epsilonNfa = new EpsilonNFA(5);
+        epsilonNfa.addEdge(0, 1, 'a');
+        epsilonNfa.addEdge(0, 4, 'b');
+        epsilonNfa.addEdge(1, 2, 'c');
+        epsilonNfa.addEdge(1, 3, 'd');
+        epsilonNfa.addEdge(1, 4, 'e');
+        epsilonNfa.addEdge(2, 3, 'f');
+        epsilonNfa.addEdge(3, 4, 'g');
+        epsilonNfa.printAdjList();
     }
 }

@@ -14,7 +14,7 @@ public class Main {
 //        String regularExpression = takeInputRegularExpression();
 //        System.out.println(regularExpression);
 
-        String regularExpression = "(a.b)";
+        String regularExpression = "(a.b).c";
 
         //convert to postfix expression
         String postfix = PostfixConversionHelper.convertToPostFix(regularExpression);
