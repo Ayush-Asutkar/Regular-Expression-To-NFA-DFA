@@ -72,7 +72,41 @@ public class PostFixREToEpsilonNFAConversionHelper {
         return resultEpsilonNFA;
     }
 
-    public static void PostFixREToNFA (String input) {
+    private static EpsilonNFA applyKleeneStarOperator (EpsilonNFA first) {
+        int numberOfNodesInResult = first.getNumberOfNodes() + 2;
+        EpsilonNFA resultEpsilonNFA = new EpsilonNFA(numberOfNodesInResult);
+
+        int newStartNode = first.getNumberOfNodes();
+        int newFinalNode = first.getNumberOfNodes() + 1;
+
+        resultEpsilonNFA.setStartNode(newStartNode);
+        resultEpsilonNFA.setFinalNode(newFinalNode);
+
+        resultEpsilonNFA.addAllEdge(first.getAdjList());
+//        System.out.println("After adding the graph:");
+//        resultEpsilonNFA.printAdjList();
+
+        resultEpsilonNFA.addEdge(first.getFinalNode(), first.getStartNode(), SpecialCharacters.Epsilon);
+//        System.out.println("After adding firstFinal->firstStart:");
+//        resultEpsilonNFA.printAdjList();
+
+        resultEpsilonNFA.addEdge(resultEpsilonNFA.getStartNode(), first.getStartNode(), SpecialCharacters.Epsilon);
+//        System.out.println("After adding start->firstStart");
+//        resultEpsilonNFA.printAdjList();
+
+        resultEpsilonNFA.addEdge(resultEpsilonNFA.getStartNode(), resultEpsilonNFA.getFinalNode(), SpecialCharacters.Epsilon);
+//        System.out.println("After adding start->final");
+//        resultEpsilonNFA.printAdjList();
+
+        resultEpsilonNFA.addEdge(first.getFinalNode(), resultEpsilonNFA.getFinalNode(), SpecialCharacters.Epsilon);
+//        System.out.println("After adding firstFinal->final");
+//        resultEpsilonNFA.printAdjList();
+
+        return resultEpsilonNFA;
+    }
+
+
+    public static EpsilonNFA PostFixREToEpsilonNFA(String input) {
         Stack<EpsilonNFA> stack = new Stack<>();
 
         //scan all the characters one by one
@@ -115,8 +149,9 @@ public class PostFixREToEpsilonNFAConversionHelper {
                     case SpecialCharacters.KleeneStarOperator: //Kleene star operator
                     {
                         EpsilonNFA first = stack.pop();
-//                        EpsilonNFA resultNFA = applyStarOperator(first);
-//                        stack.push(resultNFA);
+                        EpsilonNFA resultNFA = applyKleeneStarOperator(first);
+//                        resultNFA.printAdjList();
+                        stack.push(resultNFA);
                         break;
                     }
 
@@ -128,11 +163,12 @@ public class PostFixREToEpsilonNFAConversionHelper {
                 }
             }
         }
+        return stack.peek();
     }
 
 
     //for testing
     public static void main(String[] args) {
-        PostFixREToNFA("ab.c.");
+        PostFixREToEpsilonNFA("a*");
     }
 }

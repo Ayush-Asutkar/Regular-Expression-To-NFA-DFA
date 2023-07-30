@@ -74,11 +74,17 @@ public class EpsilonNFA {
         System.out.println("Final Node = " + this.finalNode);
         System.out.println("Following is the adjacency list:");
         for (int i=0; i<this.numberOfNodes; i++) {
+            if (i == this.finalNode) {
+                System.out.println("Node " + i + " is the final node");
+                continue;
+            }
+
+            if (this.adjList.get(i).isEmpty()) {
+                System.out.println("Node " + i + " does not make any edge");
+            }
             System.out.println("Node "  + i + " makes an edge with ");
-            this.adjList.get(i).forEach((key, value) -> System.out.println("\tNode " + key + " with edge weight " + value));
-//            for (Map.Entry<Integer, Character> mapElement: this.adjList.get(i).entrySet()) {
-//                mapElement
-//            }
+            this.adjList.get(i).forEach((key, value) ->
+                    System.out.println("\tNode " + key + " with edge weight '" + value + "'"));
         }
         System.out.println();
     }
