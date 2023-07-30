@@ -23,18 +23,18 @@ public class PostfixConversionHelper {
         for (int i=0; i < input.length(); i++) {
             char ch = input.charAt(i);
 
-            //scanned operator is an operand, add it to result
+            //scanned character is an operand, add it to result
             if (Character.isLetterOrDigit(ch)) {
                 result.append(ch);
             }
 
-            // if the scanned operator is '(',
+            // if the scanned character is '(',
             // push it to the stack
             else if (ch == '(') {
                 stack.push(ch);
             }
 
-            // if the scanned operator is an ')',
+            // if the scanned character is an ')',
             // pop and output from the stack, until an '(' is encountered
             else if (ch== ')') {
                 while(!stack.isEmpty()  &&  (stack.peek() != '(')) {

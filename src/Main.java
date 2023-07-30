@@ -11,8 +11,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String regularExpression = takeInputRegularExpression();
+//        String regularExpression = takeInputRegularExpression();
 //        System.out.println(regularExpression);
+
+        String regularExpression = "(a.b)";
 
         //convert to postfix expression
         String postfix = PostfixConversionHelper.convertToPostFix(regularExpression);
