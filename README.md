@@ -21,7 +21,7 @@ Given any Regular Expression over the alphabet as input, your program should gen
 <p>(Optional: Implement methods to transform to DFA, DFA minimization, simulation, etc.)</p>
 
 ### How to run
-1. Clone the repository: 
+1. Clone the repository: https://github.com/Ayush-Asutkar/Regular-Expression-To-NFA-DFA.git
 2. Open in your favourite editor. (The editor used while making this project was Intellij IDEA)
 3. If you want to run the complete project, run the Main.java in src folder.
 4. If you want to check/run any specific conversions, go to src, and then choose the conversion you wish to run. Inside that class a small main method is written, make changes as per request, and run the main. (An example is already written at that place)
