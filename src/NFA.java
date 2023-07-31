@@ -1,12 +1,9 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 // This will be the graph
 public class NFA {
     private final int numberOfNodes;
-    private final ArrayList<HashMap<Character, ArrayList<Integer>>> adjList;
+    private final List<Map<Character, Set<Integer>>> adjList;
 
     private int startNode;
     private int finalNode;
@@ -16,7 +13,7 @@ public class NFA {
         adjList = new ArrayList<>(this.numberOfNodes);
 
         for (int i=0; i<this.numberOfNodes; i++) {
-            HashMap<Character, ArrayList<Integer>> map = new HashMap<>();
+            Map<Character, Set<Integer>> map = new HashMap<>();
             adjList.add(map);
         }
 
@@ -36,8 +33,12 @@ public class NFA {
         return finalNode;
     }
 
-    public List<HashMap<Character, ArrayList<Integer>>> getAdjList() {
+    public List<Map<Character, Set<Integer>>> getAdjList() {
         return Collections.unmodifiableList(adjList);
+    }
+
+    public Set<Integer> getDestinationNodesWithGivenWeight(int from, char weight) {
+        return this.adjList.get(from).get(weight);
     }
 
     public void setStartNode(int startNode) {
@@ -49,21 +50,27 @@ public class NFA {
     }
 
     public void addEdge (int from, int to, char weight) {
-        HashMap<Character, ArrayList<Integer>> map = this.adjList.get(from);
+        Map<Character, Set<Integer>> map = this.adjList.get(from);
         if (map.containsKey(weight)) {
             map.get(weight).add(to);
         } else {
-            ArrayList<Integer> list = new ArrayList<>();
+            HashSet<Integer> list = new HashSet<>();
             list.add(to);
             map.put(weight, list);
         }
     }
 
-    public void addAllEdge (List<HashMap<Character, ArrayList<Integer>>> list) {
+    public void addAllEdge (List<Map<Character, Set<Integer>>> list) {
         this.addAllEdgeWithOffset(list, 0);
     }
 
-    public void addAllEdgeWithOffset (List<HashMap<Character, ArrayList<Integer>>> list, int offset) {
+    public void addEdgeGivenFromWeightAndToSet(int from, char weight, Set<Integer> toSet) {
+        for (Integer to: toSet) {
+            this.addEdge(from, to, weight);
+        }
+    }
+
+    public void addAllEdgeWithOffset (List<Map<Character, Set<Integer>>> list, int offset) {
         for (int i=0; i<list.size(); i++) {
             int finalI = i;
             list.get(i).forEach((key, value) -> {
@@ -84,7 +91,13 @@ public class NFA {
         System.out.println("Following is the adjacency list:");
         for (int i=0; i<this.numberOfNodes; i++) {
             if (i == this.finalNode) {
-                System.out.println("Node " + i + " is the final node");
+                if (this.adjList.get(i).isEmpty()) {
+                    System.out.println("Node " + i + " is the final node and does not make any edge");
+                } else {
+                    System.out.println("Node "  + i + " is the final node and makes an edge with ");
+                    this.adjList.get(i).forEach((key, value) ->
+                            System.out.println("\tEdge weight '" + key + "' with => " + value.toString()));
+                }
                 continue;
             }
 
@@ -112,4 +125,5 @@ public class NFA {
         nfa.setFinalNode(4);
         nfa.printAdjList();
     }
+
 }

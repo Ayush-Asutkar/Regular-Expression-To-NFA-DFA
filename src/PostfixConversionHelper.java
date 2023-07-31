@@ -24,7 +24,7 @@ public class PostfixConversionHelper {
             char ch = input.charAt(i);
 
             //scanned character is an operand, add it to result
-            if (Character.isLetterOrDigit(ch)) {
+            if (CharacterIdentifyHelper.isLatinLetter(ch)) {
                 result.append(ch);
             }
 

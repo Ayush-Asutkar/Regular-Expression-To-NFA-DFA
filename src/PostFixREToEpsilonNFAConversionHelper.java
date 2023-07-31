@@ -114,7 +114,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
 
             // scanned character is an operand,
             // Make a simple NFA out of it and push it to stack
-            if (Character.isLetterOrDigit(ch)) {
+            if (CharacterIdentifyHelper.isLatinLetter(ch)) {
                 NFA nfa = createSimpleNFA(ch);
                 stack.push(nfa);
             }
@@ -162,7 +162,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
                 }
             }
         }
-        stack.peek().printAdjList();
+//        stack.peek().printAdjList();
         return stack.peek();
     }
 
