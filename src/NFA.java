@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 
 // This will be the graph
-public class EpsilonNFA {
+public class NFA {
     private final int numberOfNodes;
     private final ArrayList<HashMap<Character, ArrayList<Integer>>> adjList;
 
     private int startNode;
     private int finalNode;
 
-    public EpsilonNFA(int numberOfNodes) {
+    public NFA(int numberOfNodes) {
         this.numberOfNodes = numberOfNodes;
         adjList = new ArrayList<>(this.numberOfNodes);
 
@@ -100,16 +100,16 @@ public class EpsilonNFA {
 
     //for testing
     public static void main(String[] args) {
-        EpsilonNFA epsilonNfa = new EpsilonNFA(5);
-        epsilonNfa.addEdge(0, 1, 'a');
-        epsilonNfa.addEdge(0, 4, 'b');
-        epsilonNfa.addEdge(1, 2, 'c');
-        epsilonNfa.addEdge(1, 3, 'd');
-        epsilonNfa.addEdge(1, 4, 'e');
-        epsilonNfa.addEdge(2, 3, 'f');
-        epsilonNfa.addEdge(3, 4, 'g');
-        epsilonNfa.setFinalNode(0);
-        epsilonNfa.setFinalNode(4);
-        epsilonNfa.printAdjList();
+        NFA nfa = new NFA(5);
+        nfa.addEdge(0, 1, 'a');
+        nfa.addEdge(0, 4, 'b');
+        nfa.addEdge(1, 2, 'c');
+        nfa.addEdge(1, 3, 'd');
+        nfa.addEdge(1, 4, 'e');
+        nfa.addEdge(2, 3, 'f');
+        nfa.addEdge(3, 4, 'g');
+        nfa.setFinalNode(0);
+        nfa.setFinalNode(4);
+        nfa.printAdjList();
     }
 }

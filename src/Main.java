@@ -23,10 +23,10 @@ public class Main {
             System.out.println("The given expression " + regularExpression + " is invalid");
         } else {
             System.out.println("Postfix Expression is " + postfix);
-            EpsilonNFA epsilonNFA = PostFixREToEpsilonNFAConversionHelper.PostFixREToEpsilonNFA(postfix);
+            NFA NFA = PostFixREToEpsilonNFAConversionHelper.PostFixREToEpsilonNFA(postfix);
 
             System.out.println("The result Epsilon NFA is ");
-            epsilonNFA.printAdjList();
+            NFA.printAdjList();
         }
     }
 }

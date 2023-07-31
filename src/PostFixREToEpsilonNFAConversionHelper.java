@@ -1,122 +1,122 @@
 import java.util.Stack;
 
 public class PostFixREToEpsilonNFAConversionHelper {
-    private static EpsilonNFA createSimpleNFA (char ch) {
-        EpsilonNFA epsilonNfa = new EpsilonNFA(2);
-        epsilonNfa.addEdge(0, 1, ch);
-        epsilonNfa.setStartNode(0);
-        epsilonNfa.setFinalNode(1);
+    private static NFA createSimpleNFA (char ch) {
+        NFA nfa = new NFA(2);
+        nfa.addEdge(0, 1, ch);
+        nfa.setStartNode(0);
+        nfa.setFinalNode(1);
 
         //for testing
-//        epsilonNfa.printAdjList();
+//        nfa.printAdjList();
 
-        return epsilonNfa;
+        return nfa;
     }
 
-    private static EpsilonNFA copyBothNFAToResultNFAForOR (EpsilonNFA first, EpsilonNFA second) {
+    private static NFA copyBothNFAToResultNFAForOR (NFA first, NFA second) {
         int numberOfNodesInResult = first.getNumberOfNodes() + second.getNumberOfNodes() + 2;
-        EpsilonNFA resultEpsilonNFA = new EpsilonNFA(numberOfNodesInResult);
+        NFA resultNFA = new NFA(numberOfNodesInResult);
 
         int newStartNode = first.getNumberOfNodes() + second.getNumberOfNodes();
         int newFinalNode = newStartNode + 1;
 
-        resultEpsilonNFA.setStartNode(newStartNode);
-        resultEpsilonNFA.setFinalNode(newFinalNode);
+        resultNFA.setStartNode(newStartNode);
+        resultNFA.setFinalNode(newFinalNode);
 
-        resultEpsilonNFA.addAllEdge(first.getAdjList());
-        resultEpsilonNFA.addAllEdgeWithOffset(second.getAdjList(), first.getNumberOfNodes());
+        resultNFA.addAllEdge(first.getAdjList());
+        resultNFA.addAllEdgeWithOffset(second.getAdjList(), first.getNumberOfNodes());
 
 //        System.out.println("After adding both graphs:");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        return resultEpsilonNFA;
+        return resultNFA;
     }
 
-    private static EpsilonNFA applyOROperator (EpsilonNFA first, EpsilonNFA second) {
-        EpsilonNFA resultEpsilonNFA = copyBothNFAToResultNFAForOR(first, second);
+    private static NFA applyOROperator (NFA first, NFA second) {
+        NFA resultNFA = copyBothNFAToResultNFAForOR(first, second);
 
-        resultEpsilonNFA.addEdge(resultEpsilonNFA.getStartNode(), first.getStartNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(resultNFA.getStartNode(), first.getStartNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding start->firstStart:");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(resultEpsilonNFA.getStartNode(), first.getNumberOfNodes(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(resultNFA.getStartNode(), first.getNumberOfNodes(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding start->secondStart");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(first.getFinalNode(), resultEpsilonNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(first.getFinalNode(), resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding first.final->newFinal");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(first.getNumberOfNodes() + second.getNumberOfNodes() - 1, resultEpsilonNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(first.getNumberOfNodes() + second.getNumberOfNodes() - 1, resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding second.final->newFinal");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        return resultEpsilonNFA;
+        return resultNFA;
     }
 
-    private static EpsilonNFA applyANDOperator (EpsilonNFA first, EpsilonNFA second) { //order matters
+    private static NFA applyANDOperator (NFA first, NFA second) { //order matters
         int numberOfNodes = first.getNumberOfNodes() + second.getNumberOfNodes() - 1;
-        EpsilonNFA resultEpsilonNFA = new EpsilonNFA(numberOfNodes);
+        NFA resultNFA = new NFA(numberOfNodes);
 
-        resultEpsilonNFA.setStartNode(first.getStartNode());
-        resultEpsilonNFA.setFinalNode(first.getNumberOfNodes() + second.getNumberOfNodes() - 2);
+        resultNFA.setStartNode(first.getStartNode());
+        resultNFA.setFinalNode(first.getNumberOfNodes() + second.getNumberOfNodes() - 2);
         //-2: one for index, and other for including the final node of first graph as start node of second graph
 
-        resultEpsilonNFA.addAllEdge(first.getAdjList());
-        resultEpsilonNFA.addAllEdgeWithOffset(second.getAdjList(), first.getNumberOfNodes() - 1);
+        resultNFA.addAllEdge(first.getAdjList());
+        resultNFA.addAllEdgeWithOffset(second.getAdjList(), first.getNumberOfNodes() - 1);
 //        System.out.println("After adding both graphs:");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
         // No epsilon nodes needed
 
-        return resultEpsilonNFA;
+        return resultNFA;
     }
 
-    private static EpsilonNFA applyKleeneStarOperator (EpsilonNFA first) {
+    private static NFA applyKleeneStarOperator (NFA first) {
         int numberOfNodesInResult = first.getNumberOfNodes() + 2;
-        EpsilonNFA resultEpsilonNFA = new EpsilonNFA(numberOfNodesInResult);
+        NFA resultNFA = new NFA(numberOfNodesInResult);
 
         int newStartNode = first.getNumberOfNodes();
         int newFinalNode = first.getNumberOfNodes() + 1;
 
-        resultEpsilonNFA.setStartNode(newStartNode);
-        resultEpsilonNFA.setFinalNode(newFinalNode);
+        resultNFA.setStartNode(newStartNode);
+        resultNFA.setFinalNode(newFinalNode);
 
-        resultEpsilonNFA.addAllEdge(first.getAdjList());
+        resultNFA.addAllEdge(first.getAdjList());
 //        System.out.println("After adding the graph:");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(first.getFinalNode(), first.getStartNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(first.getFinalNode(), first.getStartNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding firstFinal->firstStart:");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(resultEpsilonNFA.getStartNode(), first.getStartNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(resultNFA.getStartNode(), first.getStartNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding start->firstStart");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(resultEpsilonNFA.getStartNode(), resultEpsilonNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(resultNFA.getStartNode(), resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding start->final");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        resultEpsilonNFA.addEdge(first.getFinalNode(), resultEpsilonNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        resultNFA.addEdge(first.getFinalNode(), resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
 //        System.out.println("After adding firstFinal->final");
-//        resultEpsilonNFA.printAdjList();
+//        resultNFA.printAdjList();
 
-        return resultEpsilonNFA;
+        return resultNFA;
     }
 
-    public static EpsilonNFA PostFixREToEpsilonNFA(String input) {
-        Stack<EpsilonNFA> stack = new Stack<>();
+    public static NFA PostFixREToEpsilonNFA(String input) {
+        Stack<NFA> stack = new Stack<>();
 
         //scan all the characters one by one
         for (int i = 0; i < input.length(); i++) {
             char ch = input.charAt(i);
 
             // scanned character is an operand,
-            // Make a simple EpsilonNFA out of it and push it to stack
+            // Make a simple NFA out of it and push it to stack
             if (Character.isLetterOrDigit(ch)) {
-                EpsilonNFA epsilonNfa = createSimpleNFA(ch);
-                stack.push(epsilonNfa);
+                NFA nfa = createSimpleNFA(ch);
+                stack.push(nfa);
             }
 
             // scanned character is an operator,
@@ -126,20 +126,20 @@ public class PostFixREToEpsilonNFAConversionHelper {
                 switch (ch) {
                     case SpecialCharacters.OROperator: //OR operator
                     {
-                        EpsilonNFA first = stack.pop();
-                        EpsilonNFA second = stack.pop();
-                        EpsilonNFA resultEpsilonNFA = applyOROperator(first, second);
-//                        resultEpsilonNFA.printAdjList();
-                        stack.push(resultEpsilonNFA);
+                        NFA first = stack.pop();
+                        NFA second = stack.pop();
+                        NFA resultNFA = applyOROperator(first, second);
+//                        resultNFA.printAdjList();
+                        stack.push(resultNFA);
                         break;
                     }
 
                     case SpecialCharacters.ANDOperator: //AND operator
                     {
                         //order matters
-                        EpsilonNFA second = stack.pop();
-                        EpsilonNFA first = stack.pop();
-                        EpsilonNFA resultNFA = applyANDOperator(first, second);
+                        NFA second = stack.pop();
+                        NFA first = stack.pop();
+                        NFA resultNFA = applyANDOperator(first, second);
 //                        resultNFA.printAdjList();
                         stack.push(resultNFA);
                         break;
@@ -147,8 +147,8 @@ public class PostFixREToEpsilonNFAConversionHelper {
 
                     case SpecialCharacters.KleeneStarOperator: //Kleene star operator
                     {
-                        EpsilonNFA first = stack.pop();
-                        EpsilonNFA resultNFA = applyKleeneStarOperator(first);
+                        NFA first = stack.pop();
+                        NFA resultNFA = applyKleeneStarOperator(first);
 //                        resultNFA.printAdjList();
                         stack.push(resultNFA);
                         break;
