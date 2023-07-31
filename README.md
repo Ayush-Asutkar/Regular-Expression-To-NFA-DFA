@@ -32,12 +32,14 @@ Given any Regular Expression over the alphabet as input, your program should gen
 
 ### Regular Expression to Epsilon NFA
 <p>The given regular expression is first converted into its postfix expression.
-And this postfix expression is then evaluated. The operators are applied using [Thompson's Construction](https://en.wikipedia.org/wiki/Thompson%27s_construction) </p>
-<p>The implementation can be found at "conversionhelper" package -> "PostfixConversionHelper" and "PostFixREToEpsilonNFAConversionHelper"</p>
+And this postfix expression is then evaluated. The operators are applied using <a href="https://en.wikipedia.org/wiki/Thompson%27s_construction">Thompson's Construction</a></p>
+<p>The implementation can be found at <a href="src/conversionhelper">"conversionhelper"</a> package -> <a href="src/conversionhelper/PostfixConversionHelper.java">"PostfixConversionHelper"</a>
+and <a href="src/conversionhelper/PostFixREToEpsilonNFAConversionHelper.java">"PostFixREToEpsilonNFAConversionHelper"</a>.</p>
 
 ### Epsilon NFA to NFA
-<p>Referred to [link](https://www.tutorialspoint.com/how-to-convert-nfa-with-epsilon-to-without-epsilon)</p>
-<p>The implementation can be found at "conversionhelper" package -> "EpsilonNFAToNFAConversionHelper"</p>
+<p>Referred to <a href="https://www.tutorialspoint.com/how-to-convert-nfa-with-epsilon-to-without-epsilon">link</a>.</p>
+<p>The implementation can be found at <a href="src/conversionhelper">"conversionhelper"</a> package -> 
+<a href="src/conversionhelper/EpsilonNFAToNFAConversionHelper.java">"EpsilonNFAToNFAConversionHelper"</a>.</p>
 
 ### NFA to DFA
-<p>This part was optional for the assignment. Will try to update the code on github</p>
+<p>This part was optional for the assignment. Will try to update the code on github.</p>
