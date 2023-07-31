@@ -117,6 +117,10 @@ public class NFA {
         System.out.println();
     }
 
+    public void simulationOfString (String input) {
+        // TODO: 31-07-2023 Optional part: Simulation of a string over the given NFA
+    }
+
     //for testing
     public static void main(String[] args) {
         NFA nfa = new NFA(5);

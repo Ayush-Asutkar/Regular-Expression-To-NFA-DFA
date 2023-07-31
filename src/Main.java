@@ -16,9 +16,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        String regularExpression = takeInputRegularExpression();
+        String regularExpression = takeInputRegularExpression();
 
-        String regularExpression = "(a.b+a)*";
+//        String regularExpression = "(a.b+a)*";
 
         System.out.println("\nGiven regular expression: " + regularExpression);
 
@@ -37,6 +37,8 @@ public class Main {
             NFA nfa = EpsilonNFAToNFAConversionHelper.epsilonNFAtoNFA(epsilonNFA);
             System.out.println("\nThe result NFA is ");
             nfa.printAdjList();
+
+            // TODO: 31-07-2023 Optional part: Conversion to DFA
         }
     }
 }
