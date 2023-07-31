@@ -6,7 +6,7 @@ public class NFA {
     private final List<Map<Character, Set<Integer>>> adjList;
 
     private int startNode;
-    private Set<Integer> finalNodes;
+    private final Set<Integer> finalNodes;
 
     public NFA(int numberOfNodes) {
         this.numberOfNodes = numberOfNodes;

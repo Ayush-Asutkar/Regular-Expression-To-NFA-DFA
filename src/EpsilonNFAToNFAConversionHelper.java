@@ -75,7 +75,8 @@ public class EpsilonNFAToNFAConversionHelper {
 
         return result;
     }
-    public static void epsilonNFAtoNFA (NFA epsilonNFA) {
+
+    public static NFA epsilonNFAtoNFA (NFA epsilonNFA) {
         //find the closure for all the nodes
         List<Set<Integer>> epsilonClosureOfAllNodes = findEpsilonClosureOfNodes(epsilonNFA);
 //        epsilonClosureOfAllNodes.forEach(System.out::println);
@@ -106,7 +107,7 @@ public class EpsilonNFAToNFAConversionHelper {
 
         }
 
-        resultNFA.printAdjList();
+        return resultNFA;
     }
 
     //for testing

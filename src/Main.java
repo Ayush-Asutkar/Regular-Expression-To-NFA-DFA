@@ -29,9 +29,9 @@ public class Main {
             System.out.println("\nThe result Epsilon NFA is ");
             epsilonNFA.printAdjList();
 
-//            NFA nfa = EpsilonNFAToNFAConversionHelper.epsilonNFAtoNFA(epsilonNFA);
-            System.out.println("\n The result NFA is ");
-
+            NFA nfa = EpsilonNFAToNFAConversionHelper.epsilonNFAtoNFA(epsilonNFA);
+            System.out.println("\nThe result NFA is ");
+            nfa.printAdjList();
         }
     }
 }
