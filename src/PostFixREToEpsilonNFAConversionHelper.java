@@ -176,7 +176,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
                 }
             }
         }
-        stack.peek().printAdjList();
+//        stack.peek().printAdjList();
         return stack.peek();
     }
 

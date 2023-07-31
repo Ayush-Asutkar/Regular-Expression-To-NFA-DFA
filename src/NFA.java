@@ -49,6 +49,10 @@ public class NFA {
         this.finalNodes.add(finalNode);
     }
 
+    public void addAllFinalNodes(Set<Integer> nodes) {
+        this.finalNodes.addAll(nodes);
+    }
+
     public void addEdge (int from, int to, char weight) {
         Map<Character, Set<Integer>> map = this.adjList.get(from);
         if (map.containsKey(weight)) {

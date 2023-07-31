@@ -61,8 +61,20 @@ public class EpsilonNFAToNFAConversionHelper {
         return newSetForEnding;
     }
 
+    private static Set<Integer> findAllFinalNodes(List<Set<Integer>> epsilonClosureOfAllNodes, Set<Integer> finalOfOriginal) {
+        Set<Integer> result = new HashSet<>();
 
+        for(int i=0; i<epsilonClosureOfAllNodes.size(); i++) {
+            int finalI = i;
+            epsilonClosureOfAllNodes.get(i).forEach((node) -> {
+                if (finalOfOriginal.contains(node)) {
+                    result.add(finalI);
+                }
+            });
+        }
 
+        return result;
+    }
     public static void epsilonNFAtoNFA (NFA epsilonNFA) {
         //find the closure for all the nodes
         List<Set<Integer>> epsilonClosureOfAllNodes = findEpsilonClosureOfNodes(epsilonNFA);
@@ -70,6 +82,9 @@ public class EpsilonNFAToNFAConversionHelper {
 
         NFA resultNFA = new NFA(epsilonNFA.getNumberOfNodes());
         resultNFA.setStartNode(epsilonNFA.getStartNode());
+
+        //find the final states
+        resultNFA.addAllFinalNodes(findAllFinalNodes(epsilonClosureOfAllNodes, epsilonNFA.getFinalNodes()));
 
         for (int i=0; i<resultNFA.getNumberOfNodes(); i++) {
             int from = i;
@@ -96,25 +111,26 @@ public class EpsilonNFAToNFAConversionHelper {
 
     //for testing
     public static void main(String[] args) {
-//        NFA epsilonNFA = new NFA(3);
-//        epsilonNFA.addEdge(0, 0, 'A');
-//        epsilonNFA.addEdge(0, 1, SpecialCharacters.Epsilon);
-//        epsilonNFA.addEdge(1, 1, 'B');
+//        NFA epsilonNFA = new NFA(4);
+//        epsilonNFA.addEdge(0, 0, 'a');
+//        epsilonNFA.addEdge(0, 0, 'b');
+//        epsilonNFA.addEdge(0, 1, 'b');
+//        epsilonNFA.addEdge(1, 2, 'a');
 //        epsilonNFA.addEdge(1, 2, SpecialCharacters.Epsilon);
-//        epsilonNFA.addEdge(2, 2, 'C');
+//        epsilonNFA.addEdge(2, 3, 'b');
+//        epsilonNFA.addEdge(3, 3, 'a');
+//        epsilonNFA.addEdge(3, 3, 'b');
 //        epsilonNFA.setStartNode(0);
-//        epsilonNFA.setFinalNode(2);
+//        epsilonNFA.addFinalNode(3);
 //        epsilonNFA.printAdjList();
 
         NFA epsilonNFA = new NFA(4);
         epsilonNFA.addEdge(0, 0, 'a');
-        epsilonNFA.addEdge(0, 0, 'b');
-        epsilonNFA.addEdge(0, 1, 'b');
+        epsilonNFA.addEdge(0, 1, SpecialCharacters.Epsilon);
         epsilonNFA.addEdge(1, 2, 'a');
-        epsilonNFA.addEdge(1, 2, SpecialCharacters.Epsilon);
-        epsilonNFA.addEdge(2, 3, 'b');
+        epsilonNFA.addEdge(1, 3, SpecialCharacters.Epsilon);
+        epsilonNFA.addEdge(2, 1, 'b');
         epsilonNFA.addEdge(3, 3, 'a');
-        epsilonNFA.addEdge(3, 3, 'b');
         epsilonNFA.setStartNode(0);
         epsilonNFA.addFinalNode(3);
         epsilonNFA.printAdjList();
