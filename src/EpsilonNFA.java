@@ -5,8 +5,8 @@ import java.util.List;
 
 // This will be the graph
 public class EpsilonNFA {
-    private int numberOfNodes;
-    private ArrayList<HashMap<Integer, Character>> adjList;
+    private final int numberOfNodes;
+    private final ArrayList<HashMap<Character, ArrayList<Integer>>> adjList;
 
     private int startNode;
     private int finalNode;
@@ -16,7 +16,7 @@ public class EpsilonNFA {
         adjList = new ArrayList<>(this.numberOfNodes);
 
         for (int i=0; i<this.numberOfNodes; i++) {
-            HashMap<Integer, Character> map = new HashMap<>();
+            HashMap<Character, ArrayList<Integer>> map = new HashMap<>();
             adjList.add(map);
         }
 
@@ -36,7 +36,7 @@ public class EpsilonNFA {
         return finalNode;
     }
 
-    public List<HashMap<Integer, Character>> getAdjList() {
+    public List<HashMap<Character, ArrayList<Integer>>> getAdjList() {
         return Collections.unmodifiableList(adjList);
     }
 
@@ -49,27 +49,36 @@ public class EpsilonNFA {
     }
 
     public void addEdge (int from, int to, char weight) {
-        adjList.get(from).put(to, weight);
+        HashMap<Character, ArrayList<Integer>> map = this.adjList.get(from);
+        if (map.containsKey(weight)) {
+            map.get(weight).add(to);
+        } else {
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(to);
+            map.put(weight, list);
+        }
     }
 
-    public void addAllEdge (List<HashMap<Integer, Character>> list) {
+    public void addAllEdge (List<HashMap<Character, ArrayList<Integer>>> list) {
         this.addAllEdgeWithOffset(list, 0);
     }
 
-    public void addAllEdgeWithOffset (List<HashMap<Integer, Character>> list, int offset) {
+    public void addAllEdgeWithOffset (List<HashMap<Character, ArrayList<Integer>>> list, int offset) {
         for (int i=0; i<list.size(); i++) {
             int finalI = i;
             list.get(i).forEach((key, value) -> {
                 int from = finalI;
-                int to = key;
-                char weight = value;
-
-                this.addEdge(from + offset, to + offset, value);
+                char weight = key;
+                value.forEach((element) -> {
+                    int to = element;
+                    this.addEdge(from + offset, to + offset, weight);
+                });
             });
         }
     }
 
     public void printAdjList () {
+        System.out.println("Number of Nodes = " + this.numberOfNodes + " (0-based indexing)");
         System.out.println("Start Node = " + this.startNode);
         System.out.println("Final Node = " + this.finalNode);
         System.out.println("Following is the adjacency list:");
@@ -84,7 +93,7 @@ public class EpsilonNFA {
             }
             System.out.println("Node "  + i + " makes an edge with ");
             this.adjList.get(i).forEach((key, value) ->
-                    System.out.println("\tNode " + key + " with edge weight '" + value + "'"));
+                    System.out.println("\tEdge weight '" + key + "' with => " + value.toString()));
         }
         System.out.println();
     }
@@ -99,6 +108,8 @@ public class EpsilonNFA {
         epsilonNfa.addEdge(1, 4, 'e');
         epsilonNfa.addEdge(2, 3, 'f');
         epsilonNfa.addEdge(3, 4, 'g');
+        epsilonNfa.setFinalNode(0);
+        epsilonNfa.setFinalNode(4);
         epsilonNfa.printAdjList();
     }
 }

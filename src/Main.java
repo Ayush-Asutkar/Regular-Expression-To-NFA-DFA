@@ -11,10 +11,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-//        String regularExpression = takeInputRegularExpression();
-//        System.out.println(regularExpression);
+        String regularExpression = takeInputRegularExpression();
+        System.out.println(regularExpression);
 
-        String regularExpression = "(a+b)*.a";
+//        String regularExpression = "(a.b+a)*";
 
         //convert to postfix expression
         String postfix = PostfixConversionHelper.convertToPostFix(regularExpression);

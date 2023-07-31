@@ -105,7 +105,6 @@ public class PostFixREToEpsilonNFAConversionHelper {
         return resultEpsilonNFA;
     }
 
-
     public static EpsilonNFA PostFixREToEpsilonNFA(String input) {
         Stack<EpsilonNFA> stack = new Stack<>();
 
@@ -163,6 +162,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
                 }
             }
         }
+        stack.peek().printAdjList();
         return stack.peek();
     }
 
