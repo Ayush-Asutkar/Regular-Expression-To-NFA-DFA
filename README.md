@@ -25,6 +25,15 @@ Given any Regular Expression over the alphabet as input, your program should gen
 2. Open in your favourite editor. (The editor used while making this project was Intellij IDEA)
 3. If you want to run the complete project, run the Main.java in src folder.
 4. If you want to check/run any specific conversions, go to src, and then choose the conversion you wish to run. Inside that class a small main method is written, make changes as per request, and run the main. (An example is already written at that place)
+<p>The input should be given a valid input, and adding the concatenation operator (".") wherever necessary. For ex:</p>
+<p>(a.b+c)*.d</p>
+<p>The output will be printed in adjacency list format. </p>
+
+### Allowed operators:
+1. AND/Concatenation Operator: " . "
+2. OR/Union Operator: " + "
+3. Kleene Star Operator: " * "
+<p>Brackets are allowed as well.</p>
 
 ### Allowed alphabet
 <p>The allowed alphabet are lowercase and uppercase latin letters.</p>
