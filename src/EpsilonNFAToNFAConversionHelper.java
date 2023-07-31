@@ -124,15 +124,25 @@ public class EpsilonNFAToNFAConversionHelper {
 //        epsilonNFA.addFinalNode(3);
 //        epsilonNFA.printAdjList();
 
-        NFA epsilonNFA = new NFA(4);
+//        NFA epsilonNFA = new NFA(4);
+//        epsilonNFA.addEdge(0, 0, 'a');
+//        epsilonNFA.addEdge(0, 1, SpecialCharacters.Epsilon);
+//        epsilonNFA.addEdge(1, 2, 'a');
+//        epsilonNFA.addEdge(1, 3, SpecialCharacters.Epsilon);
+//        epsilonNFA.addEdge(2, 1, 'b');
+//        epsilonNFA.addEdge(3, 3, 'a');
+//        epsilonNFA.setStartNode(0);
+//        epsilonNFA.addFinalNode(3);
+//        epsilonNFA.printAdjList();
+
+        NFA epsilonNFA = new NFA(3);
         epsilonNFA.addEdge(0, 0, 'a');
         epsilonNFA.addEdge(0, 1, SpecialCharacters.Epsilon);
-        epsilonNFA.addEdge(1, 2, 'a');
-        epsilonNFA.addEdge(1, 3, SpecialCharacters.Epsilon);
-        epsilonNFA.addEdge(2, 1, 'b');
-        epsilonNFA.addEdge(3, 3, 'a');
+        epsilonNFA.addEdge(1, 1, 'b');
+        epsilonNFA.addEdge(1, 2, SpecialCharacters.Epsilon);
+        epsilonNFA.addEdge(2, 2, 'c');
         epsilonNFA.setStartNode(0);
-        epsilonNFA.addFinalNode(3);
+        epsilonNFA.addFinalNode(2);
         epsilonNFA.printAdjList();
 
         epsilonNFAtoNFA(epsilonNFA);
