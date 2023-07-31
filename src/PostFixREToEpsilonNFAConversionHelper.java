@@ -5,7 +5,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
         NFA nfa = new NFA(2);
         nfa.addEdge(0, 1, ch);
         nfa.setStartNode(0);
-        nfa.setFinalNode(1);
+        nfa.addFinalNode(1);
 
         //for testing
 //        nfa.printAdjList();
@@ -21,7 +21,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
         int newFinalNode = newStartNode + 1;
 
         resultNFA.setStartNode(newStartNode);
-        resultNFA.setFinalNode(newFinalNode);
+        resultNFA.addFinalNode(newFinalNode);
 
         resultNFA.addAllEdge(first.getAdjList());
         resultNFA.addAllEdgeWithOffset(second.getAdjList(), first.getNumberOfNodes());
@@ -43,11 +43,17 @@ public class PostFixREToEpsilonNFAConversionHelper {
 //        System.out.println("After adding start->secondStart");
 //        resultNFA.printAdjList();
 
-        resultNFA.addEdge(first.getFinalNode(), resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        for (Integer firstFinal: first.getFinalNodes()) {
+            for (Integer resultFinal: resultNFA.getFinalNodes()) {
+                resultNFA.addEdge(firstFinal, resultFinal, SpecialCharacters.Epsilon);
+            }
+        }
 //        System.out.println("After adding first.final->newFinal");
 //        resultNFA.printAdjList();
 
-        resultNFA.addEdge(first.getNumberOfNodes() + second.getNumberOfNodes() - 1, resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        for (Integer resultFinal: resultNFA.getFinalNodes()) {
+            resultNFA.addEdge(first.getNumberOfNodes() + second.getNumberOfNodes() - 1, resultFinal, SpecialCharacters.Epsilon);
+        }
 //        System.out.println("After adding second.final->newFinal");
 //        resultNFA.printAdjList();
 
@@ -59,7 +65,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
         NFA resultNFA = new NFA(numberOfNodes);
 
         resultNFA.setStartNode(first.getStartNode());
-        resultNFA.setFinalNode(first.getNumberOfNodes() + second.getNumberOfNodes() - 2);
+        resultNFA.addFinalNode(first.getNumberOfNodes() + second.getNumberOfNodes() - 2);
         //-2: one for index, and other for including the final node of first graph as start node of second graph
 
         resultNFA.addAllEdge(first.getAdjList());
@@ -80,13 +86,15 @@ public class PostFixREToEpsilonNFAConversionHelper {
         int newFinalNode = first.getNumberOfNodes() + 1;
 
         resultNFA.setStartNode(newStartNode);
-        resultNFA.setFinalNode(newFinalNode);
+        resultNFA.addFinalNode(newFinalNode);
 
         resultNFA.addAllEdge(first.getAdjList());
 //        System.out.println("After adding the graph:");
 //        resultNFA.printAdjList();
 
-        resultNFA.addEdge(first.getFinalNode(), first.getStartNode(), SpecialCharacters.Epsilon);
+        for (Integer firstFinal: first.getFinalNodes()) {
+            resultNFA.addEdge(firstFinal, first.getStartNode(), SpecialCharacters.Epsilon);
+        }
 //        System.out.println("After adding firstFinal->firstStart:");
 //        resultNFA.printAdjList();
 
@@ -94,11 +102,17 @@ public class PostFixREToEpsilonNFAConversionHelper {
 //        System.out.println("After adding start->firstStart");
 //        resultNFA.printAdjList();
 
-        resultNFA.addEdge(resultNFA.getStartNode(), resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        for (Integer resultFinal: resultNFA.getFinalNodes()) {
+            resultNFA.addEdge(resultNFA.getStartNode(), resultFinal, SpecialCharacters.Epsilon);
+        }
 //        System.out.println("After adding start->final");
 //        resultNFA.printAdjList();
 
-        resultNFA.addEdge(first.getFinalNode(), resultNFA.getFinalNode(), SpecialCharacters.Epsilon);
+        for (Integer firstFinal: first.getFinalNodes()) {
+            for (Integer resultFinal: resultNFA.getFinalNodes()) {
+                resultNFA.addEdge(firstFinal, resultFinal, SpecialCharacters.Epsilon);
+            }
+        }
 //        System.out.println("After adding firstFinal->final");
 //        resultNFA.printAdjList();
 
@@ -162,7 +176,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
                 }
             }
         }
-//        stack.peek().printAdjList();
+        stack.peek().printAdjList();
         return stack.peek();
     }
 

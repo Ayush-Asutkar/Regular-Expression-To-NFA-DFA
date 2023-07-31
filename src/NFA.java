@@ -6,7 +6,7 @@ public class NFA {
     private final List<Map<Character, Set<Integer>>> adjList;
 
     private int startNode;
-    private int finalNode;
+    private Set<Integer> finalNodes;
 
     public NFA(int numberOfNodes) {
         this.numberOfNodes = numberOfNodes;
@@ -18,7 +18,7 @@ public class NFA {
         }
 
         this.startNode = -1;
-        this.finalNode = -1;
+        this.finalNodes = new HashSet<>();
     }
 
     public int getNumberOfNodes() {
@@ -29,8 +29,8 @@ public class NFA {
         return startNode;
     }
 
-    public int getFinalNode() {
-        return finalNode;
+    public Set<Integer> getFinalNodes() {
+        return finalNodes;
     }
 
     public List<Map<Character, Set<Integer>>> getAdjList() {
@@ -45,8 +45,8 @@ public class NFA {
         this.startNode = startNode;
     }
 
-    public void setFinalNode(int finalNode) {
-        this.finalNode = finalNode;
+    public void addFinalNode(int finalNode) {
+        this.finalNodes.add(finalNode);
     }
 
     public void addEdge (int from, int to, char weight) {
@@ -87,10 +87,10 @@ public class NFA {
     public void printAdjList () {
         System.out.println("Number of Nodes = " + this.numberOfNodes + " (0-based indexing)");
         System.out.println("Start Node = " + this.startNode);
-        System.out.println("Final Node = " + this.finalNode);
+        System.out.println("Final Node = " + this.finalNodes);
         System.out.println("Following is the adjacency list:");
         for (int i=0; i<this.numberOfNodes; i++) {
-            if (i == this.finalNode) {
+            if (this.finalNodes.contains(i)) {
                 if (this.adjList.get(i).isEmpty()) {
                     System.out.println("Node " + i + " is the final node and does not make any edge");
                 } else {
@@ -121,8 +121,8 @@ public class NFA {
         nfa.addEdge(1, 4, 'e');
         nfa.addEdge(2, 3, 'f');
         nfa.addEdge(3, 4, 'g');
-        nfa.setFinalNode(0);
-        nfa.setFinalNode(4);
+        nfa.addFinalNode(0);
+        nfa.addFinalNode(4);
         nfa.printAdjList();
     }
 

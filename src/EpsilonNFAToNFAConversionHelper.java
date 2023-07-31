@@ -116,7 +116,7 @@ public class EpsilonNFAToNFAConversionHelper {
         epsilonNFA.addEdge(3, 3, 'a');
         epsilonNFA.addEdge(3, 3, 'b');
         epsilonNFA.setStartNode(0);
-        epsilonNFA.setFinalNode(3);
+        epsilonNFA.addFinalNode(3);
         epsilonNFA.printAdjList();
 
         epsilonNFAtoNFA(epsilonNFA);
