@@ -27,6 +27,7 @@ Given any Regular Expression over the alphabet as input, your program should gen
 4. If you want to check/run any specific conversions, go to src, and then choose the conversion you wish to run. Inside that class a small main method is written, make changes as per request, and run the main. (An example is already written at that place)
 <p>The input should be given a valid input, and adding the concatenation operator (".") wherever necessary. For ex:</p>
 <p>(a.b+c)*.d</p>
+<p>a*.b+a.b</p>
 <p>The output will be printed in adjacency list format. </p>
 
 ### Allowed operators:
