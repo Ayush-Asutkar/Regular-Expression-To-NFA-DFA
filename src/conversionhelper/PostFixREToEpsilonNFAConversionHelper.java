@@ -1,3 +1,9 @@
+package conversionhelper;
+
+import characterhelper.CharacterIdentifyHelper;
+import characterhelper.SpecialCharacters;
+import model.NFA;
+
 import java.util.Stack;
 
 public class PostFixREToEpsilonNFAConversionHelper {
@@ -127,7 +133,7 @@ public class PostFixREToEpsilonNFAConversionHelper {
             char ch = input.charAt(i);
 
             // scanned character is an operand,
-            // Make a simple NFA out of it and push it to stack
+            // Make a simple model.NFA out of it and push it to stack
             if (CharacterIdentifyHelper.isLatinLetter(ch)) {
                 NFA nfa = createSimpleNFA(ch);
                 stack.push(nfa);

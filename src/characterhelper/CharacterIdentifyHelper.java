@@ -1,3 +1,5 @@
+package characterhelper;
+
 public class CharacterIdentifyHelper {
     public static boolean isLatinLetter (char ch) {
         if ((ch >= 'a')  &&  (ch <= 'z')) {

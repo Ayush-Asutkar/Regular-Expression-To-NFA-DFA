@@ -1,3 +1,5 @@
+package characterhelper;
+
 public class SpecialCharacters {
     public static final char OROperator = '+';
     public static final char ANDOperator = '.';

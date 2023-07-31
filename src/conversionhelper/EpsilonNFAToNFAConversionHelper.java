@@ -1,3 +1,7 @@
+package conversionhelper;
+
+import model.NFA;
+import characterhelper.SpecialCharacters;
 import java.util.*;
 
 public class EpsilonNFAToNFAConversionHelper {
@@ -112,12 +116,12 @@ public class EpsilonNFAToNFAConversionHelper {
 
     //for testing
     public static void main(String[] args) {
-//        NFA epsilonNFA = new NFA(4);
+//        model.NFA epsilonNFA = new model.NFA(4);
 //        epsilonNFA.addEdge(0, 0, 'a');
 //        epsilonNFA.addEdge(0, 0, 'b');
 //        epsilonNFA.addEdge(0, 1, 'b');
 //        epsilonNFA.addEdge(1, 2, 'a');
-//        epsilonNFA.addEdge(1, 2, SpecialCharacters.Epsilon);
+//        epsilonNFA.addEdge(1, 2, characterhelper.SpecialCharacters.Epsilon);
 //        epsilonNFA.addEdge(2, 3, 'b');
 //        epsilonNFA.addEdge(3, 3, 'a');
 //        epsilonNFA.addEdge(3, 3, 'b');
@@ -125,11 +129,11 @@ public class EpsilonNFAToNFAConversionHelper {
 //        epsilonNFA.addFinalNode(3);
 //        epsilonNFA.printAdjList();
 
-//        NFA epsilonNFA = new NFA(4);
+//        model.NFA epsilonNFA = new model.NFA(4);
 //        epsilonNFA.addEdge(0, 0, 'a');
-//        epsilonNFA.addEdge(0, 1, SpecialCharacters.Epsilon);
+//        epsilonNFA.addEdge(0, 1, characterhelper.SpecialCharacters.Epsilon);
 //        epsilonNFA.addEdge(1, 2, 'a');
-//        epsilonNFA.addEdge(1, 3, SpecialCharacters.Epsilon);
+//        epsilonNFA.addEdge(1, 3, characterhelper.SpecialCharacters.Epsilon);
 //        epsilonNFA.addEdge(2, 1, 'b');
 //        epsilonNFA.addEdge(3, 3, 'a');
 //        epsilonNFA.setStartNode(0);

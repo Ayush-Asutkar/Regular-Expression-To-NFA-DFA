@@ -1,3 +1,8 @@
+import conversionhelper.EpsilonNFAToNFAConversionHelper;
+import conversionhelper.PostFixREToEpsilonNFAConversionHelper;
+import conversionhelper.PostfixConversionHelper;
+import model.NFA;
+
 import java.util.Scanner;
 
 public class Main {

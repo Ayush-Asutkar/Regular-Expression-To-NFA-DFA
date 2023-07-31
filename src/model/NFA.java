@@ -1,3 +1,5 @@
+package model;
+
 import java.util.*;
 
 // This will be the graph

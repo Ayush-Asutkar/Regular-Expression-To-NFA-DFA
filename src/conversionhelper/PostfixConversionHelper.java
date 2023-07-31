@@ -1,3 +1,7 @@
+package conversionhelper;
+
+import characterhelper.CharacterIdentifyHelper;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
